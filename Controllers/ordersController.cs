@@ -25,27 +25,36 @@ namespace OptikBatikOrders.Controllers
 
         // GET api/<ordersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public orders Get(int ordernum)
         {
-            return "value";
+           foreach(var order in orders)
+            {
+                if (order.orderNum == ordernum)
+                    return order;
+            }
+            return null;
         }
 
         // POST api/<ordersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] orders value)
         {
+            orders.Add(new orders { orderNum = value.orderNum, Status = value.Status, orderSum = value.orderSum });
         }
 
         // PUT api/<ordersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int ordernum, [FromBody] orders value)
         {
-        }
-
-        // DELETE api/<ordersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            foreach (var order in orders)
+            {
+                if(order.orderNum == ordernum)
+                {
+                    order.Status = value.Status;
+                    order.orderNum = value.orderNum;
+                    order.orderSum = value.orderSum;
+                }
+            }
         }
     }
 }
