@@ -11,9 +11,9 @@ namespace OptikBatikOrders.Controllers
     {
         private static List<orders> orders = new List<orders>
        {
-           new orders { orderNum=130, Status="send", orderSum=450},
-           new orders { orderNum=255, Status="arrive", orderSum=200},
-           new orders { orderNum=49, Status="send", orderSum=560},
+           new orders { orderNum=130, Status="send", orderSum=450, orderDate=new DateTime(2022,12,20)},
+           new orders { orderNum=255, Status="arrive", orderSum=200,  orderDate=new DateTime(2023,5,7)},
+           new orders { orderNum=49, Status="send", orderSum=560,  orderDate=new DateTime(2024,01,01)},
 
        };
         // GET: api/<ordersController>
@@ -39,7 +39,7 @@ namespace OptikBatikOrders.Controllers
         [HttpPost]
         public void Post([FromBody] orders value)
         {
-            orders.Add(new orders { orderNum = value.orderNum, Status = value.Status, orderSum = value.orderSum });
+            orders.Add(new orders { orderNum = value.orderNum, Status = value.Status, orderSum = value.orderSum, orderDate=value.orderDate });
         }
 
         // PUT api/<ordersController>/5
@@ -53,6 +53,7 @@ namespace OptikBatikOrders.Controllers
                     order.Status = value.Status;
                     order.orderNum = value.orderNum;
                     order.orderSum = value.orderSum;
+                    order.orderDate = value.orderDate;
                 }
             }
         }
