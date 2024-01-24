@@ -2,7 +2,7 @@
 
 namespace OptikBatikOrders
 {
-    public class DataContext : IDataContext
+    public class DataContext 
     {
         public List<products> products = new List<products>();
         public List<orders> orders = new List<orders>();

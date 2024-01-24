@@ -9,25 +9,31 @@ namespace OptikBatikOrders.Controllers
     [ApiController]
     public class customerController : ControllerBase
     {
-        private static List<customers> customers = new List<customers>
-       {
-           new customers { Id=1, Name="avraham", Age=50, City="netanya", HMO="clalit"},
-           new customers { Id=2, Name="yosi", Age=35, City="modiin", HMO="clalit"},
-           new customers { Id=3, Name="eden", Age=17, City="modiin-ilit", HMO="macabi"},
+        // private static List<customers> customers = new List<customers>
+        //{
+        //    new customers { Id=1, Name="avraham", Age=50, City="netanya", HMO="clalit"},
+        //    new customers { Id=2, Name="yosi", Age=35, City="modiin", HMO="clalit"},
+        //    new customers { Id=3, Name="eden", Age=17, City="modiin-ilit", HMO="macabi"},
 
-       };
+        //};
+        private readonly DataContext _contextC;
+        public customerController(DataContext context)
+        {
+            _contextC = context;
+        }
+
         // GET: api/<castumerController>
         [HttpGet]
         public List<customers> Get()
         {
-            return customers;
+            return _contextC.customers;
         }
 
         // GET api/<castumerController>/5
         [HttpGet("{id}")]
         public customers Get(int id)
         {
-            foreach (customers customer in customers)
+            foreach (customers customer in _contextC.customers)
             {
                 if (customer.Id == id)
                     return customer;
@@ -40,7 +46,7 @@ namespace OptikBatikOrders.Controllers
         public void Post([FromBody] customers value)
         {
             customers new_customer = new customers { Id = value.Id, Name = value.Name, Age = value.Age, City = value.City, HMO = value.HMO };
-            customers.Add(new_customer);
+            _contextC.customers.Add(new_customer);
         }
 
         // PUT api/<castumerController>/5
@@ -48,7 +54,7 @@ namespace OptikBatikOrders.Controllers
         public void Put(int id, [FromBody] customers value)
         {
             customers update_customer = new customers { Id = value.Id, Name = value.Name, Age = value.Age, City = value.City, HMO = value.HMO };
-            foreach (customers customer in customers)
+            foreach (customers customer in _contextC.customers)
             {
                 if (customer.Id == id)
                 {

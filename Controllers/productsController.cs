@@ -10,26 +10,31 @@ namespace OptikBatikOrders.Controllers
     [ApiController]
     public class productsController : ControllerBase
     {
-        private static List<products> glasesList = new List<products>
-       {
-           new products { Barcode="452698713", Price=458, ProdName="syd", Brand="gucci"},
-           new products {Barcode="478956213", Price=999, ProdName="otkgl", Brand="lemke-berlin"},
-           new products { Barcode="023541689", Price=326, ProdName="cfjtk", Brand="halperin"},
+        // private static List<products> glasesList = new List<products>
+        //{
+        //    new products { Barcode="452698713", Price=458, ProdName="syd", Brand="gucci"},
+        //    new products {Barcode="478956213", Price=999, ProdName="otkgl", Brand="lemke-berlin"},
+        //    new products { Barcode="023541689", Price=326, ProdName="cfjtk", Brand="halperin"},
 
-       };
+        //};
+        private readonly DataContext _contextP;
+        public productsController(DataContext context)
+        {
+            _contextP=context;
+        }
 
         // GET: api/<productsController>
         [HttpGet]
         public IEnumerable<products> Get()
         {
-            return glasesList;
+            return _contextP.products;
         }
 
         // GET api/<productsController>/5
         [HttpGet("{id}")]
         public ActionResult Get(string id)
         {
-            foreach(var product in glasesList)
+            foreach(var product in _contextP.products)
             {
                 if (product.Barcode.Equals(id))
                     return Ok(product);
@@ -41,14 +46,14 @@ namespace OptikBatikOrders.Controllers
         [HttpPost]
         public void Post([FromBody] products value)
         {
-            glasesList.Add(new products { Barcode=value.Barcode, Price=value.Price, ProdName=value.ProdName, Brand=value.Brand});
+            _contextP.products.Add(new products { Barcode=value.Barcode, Price=value.Price, ProdName=value.ProdName, Brand=value.Brand});
         }
 
         // PUT api/<productsController>/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] products value)
         {
-            foreach(var product in glasesList)
+            foreach(var product in _contextP.products)
             {
                 if (product.Barcode.Equals(id))
                 {
@@ -66,11 +71,11 @@ namespace OptikBatikOrders.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            foreach (var product in glasesList)
+            foreach (var product in _contextP.products)
             {
                 if (product.Barcode.Equals(id))
                 {
-                    glasesList.Remove(product);
+                    _contextP.products.Remove(product);
                     return Ok();
                 }
             }
