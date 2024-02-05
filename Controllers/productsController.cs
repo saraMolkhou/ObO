@@ -10,13 +10,7 @@ namespace OptikBatikOrders.Controllers
     [ApiController]
     public class productsController : ControllerBase
     {
-        // private static List<products> glasesList = new List<products>
-        //{
-        //    new products { Barcode="452698713", Price=458, ProdName="syd", Brand="gucci"},
-        //    new products {Barcode="478956213", Price=999, ProdName="otkgl", Brand="lemke-berlin"},
-        //    new products { Barcode="023541689", Price=326, ProdName="cfjtk", Brand="halperin"},
-
-        //};
+        
         private readonly DataContext _contextP;
         public productsController(DataContext context)
         {
